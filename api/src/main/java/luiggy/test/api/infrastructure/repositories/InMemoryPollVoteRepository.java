@@ -18,6 +18,7 @@ public class InMemoryPollVoteRepository implements IPollVoteRepository {
         this.data = new HashMap<>();
     }
 
+    @Override
     public PollVote save(PollVote pollVote) {
         if (data.containsKey(pollVote.getId())) {
             throw new RuntimeException("the poll vote already exists");
@@ -49,4 +50,5 @@ public class InMemoryPollVoteRepository implements IPollVoteRepository {
                 .filter(pollVote -> pollVote.getPollOptionId().equals(pollOptionId))
                 .count();
     }
+
 }
