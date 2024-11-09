@@ -2,7 +2,7 @@ package luiggy.test.api.controllers;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import luiggy.test.api.application.use_cases.IPollWritingService;
+import luiggy.test.api.application.use_cases.IPollService;
 import luiggy.test.api.infrastructure.dtos.requests.CreatePollDto;
 import luiggy.test.api.infrastructure.dtos.responses.FetchedPoll;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PollController {
 
-    private IPollWritingService pollService;
+    private IPollService pollService;
 
     @PostMapping
     public ResponseEntity<FetchedPoll> createPoll(@RequestBody @Valid CreatePollDto createPollDto) {
@@ -24,9 +24,8 @@ public class PollController {
 
     @GetMapping
     public ResponseEntity<List<FetchedPoll>> getAll() {
-        return ResponseEntity.ok(List.of());
+        return ResponseEntity.ok(pollService.getAll());
     }
-
 
 
 }

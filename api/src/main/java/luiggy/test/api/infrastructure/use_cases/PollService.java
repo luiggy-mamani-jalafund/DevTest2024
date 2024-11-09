@@ -2,7 +2,7 @@ package luiggy.test.api.infrastructure.use_cases;
 
 import lombok.AllArgsConstructor;
 import luiggy.test.api.application.use_cases.IPollOptionService;
-import luiggy.test.api.application.use_cases.IPollWritingService;
+import luiggy.test.api.application.use_cases.IPollService;
 import luiggy.test.api.domain.entities.Poll;
 import luiggy.test.api.domain.repositories.IPollRepository;
 import luiggy.test.api.domain.repositories.IPollVoteRepository;
@@ -16,11 +16,10 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class PollService implements IPollWritingService {
+public class PollService implements IPollService {
 
     private final ModelMapper modelMapper;
     private final IPollRepository pollRepository;
-    private final IPollVoteRepository voteRepository;
     private final IPollOptionService pollOptionService;
 
     @Override
@@ -34,9 +33,17 @@ public class PollService implements IPollWritingService {
         return createdPollDto;
     }
 
-    /*@Override
+    @Override
     public List<FetchedPoll> getAll() {
-        System.out.println(pollRepository.getAll());
-        return List.of();
-    }*/
+        List<FetchedPoll> polls = pollRepository.getAll()
+                .stream()
+                .map(poll -> modelMapper.map(poll, FetchedPoll.class))
+                .toList();
+        for (FetchedPoll poll : polls) {
+            poll.setOptions(pollOptionService.getAllByPollId(poll.getId()));
+        }
+
+        return polls;
+    }
+
 }
