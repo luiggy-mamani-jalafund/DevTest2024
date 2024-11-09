@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import CreatePollForm from "../organisms/CreatePollForm";
 import { FetchedPoll } from "@/models/dtos/FetchedPollDto";
 import PageLoader from "@/components/loaders/PageLoader";
-import { gellAllPolls } from "@/utils/requesters/PollRequester";
+import { gellAllPolls, voteOption } from "@/utils/requesters/PollRequester";
+import { VotePollOptionDto } from "@/models/dtos/CreatePollDto";
 
 const PollRenderer = ({ name }: { name: string }) => {
     const [isCreating, setCreating] = useState(false);
@@ -18,6 +19,16 @@ const PollRenderer = ({ name }: { name: string }) => {
                 setPolls([]);
             });
     }, []);
+
+    const vote = async (pollId: string, pollOptionId: string) => {
+        // TODO: add field to enter the user email
+        let vote: VotePollOptionDto = {
+            optionId: pollOptionId,
+            voterEmail: "luiggy@gmail.com",
+        };
+        await voteOption(pollId, vote);
+        window.location.reload();
+    };
 
     if (!polls) {
         return <PageLoader />;
@@ -41,7 +52,10 @@ const PollRenderer = ({ name }: { name: string }) => {
                         <h2>{poll.name}</h2>
 
                         {poll.options.map((option, i) => (
-                            <div key={`poll-option-${i}`}>
+                            <div
+                                key={`poll-option-${i}`}
+                                onClick={() => vote(poll.id, option.id)}
+                            >
                                 <h4>
                                     {option.name} - <i>{option.votes} votes</i>
                                 </h4>
