@@ -14,4 +14,6 @@ public interface IPollVoteRepository {
 
     int countVotesByPollOptionId(UUID pollOptionId);
 
+    PollVote save(PollVote newVote);
+
 }
