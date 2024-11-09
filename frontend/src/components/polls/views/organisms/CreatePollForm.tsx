@@ -71,6 +71,7 @@ const CreatePollForm: React.FC<Props> = ({ cancel }) => {
         };
 
         await createPoll(poll);
+        window.location.reload();
     };
 
     useEffect(() => {
