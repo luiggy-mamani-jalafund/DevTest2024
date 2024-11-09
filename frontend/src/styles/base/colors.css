@@ -1,0 +1,17 @@
+:root {
+    --bg-100: #dcfce7;
+    --bg-300: #86efac;
+    --bg-500: #22c55e;
+
+    --tx-900: #111827;
+    --tx-800: #1f2937;
+
+    --cl-error: #ef4444;
+    --cl-warn: #f97316;
+    --cl-info: #06b6d4;
+
+    --rounded-sm: 0.125rem;
+    --rounded: 0.25rem;
+    --rounded-md: 0.375rem;
+    --rounded-lg: 0.5rem;
+}
